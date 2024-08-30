@@ -2,7 +2,7 @@ return {
   'yetone/avante.nvim',
   event = 'VeryLazy',
   opts = {
-    provider = 'claude',
+    provider = 'deepseek',
     windows = {
       width = 40,
     },
