@@ -754,7 +754,7 @@ require('lazy').setup({
   require 'custom.plugins.dingllm',
   require 'custom.plugins.lazygit',
   require 'custom.plugins.nvim-treesiter',
-  require 'custom.plugins.tokyonight',
+  require 'custom.plugins.catppuccin',
   require 'custom.plugins.kznllm',
   require 'custom.plugins.render-markdown',
   require 'custom.plugins.avante',
