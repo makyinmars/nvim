@@ -750,7 +750,7 @@ require('lazy').setup({
   require 'custom.plugins.noice',
   require 'custom.plugins.flash',
   require 'custom.plugins.bufferline',
-  require 'custom.plugins.alpha',
+  require 'custom.plugins.dashboard',
   require 'custom.plugins.dingllm',
   require 'custom.plugins.lazygit',
   require 'custom.plugins.nvim-treesiter',

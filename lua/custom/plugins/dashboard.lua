@@ -76,7 +76,7 @@ return {
       preview = {
         command = 'chafa --passthrough tmux -f symbols -s 60x60 -c full --fg-only --symbols braille --clear',
         -- file_path = '$(ls ' .. home .. '/.config/nvim/static/*.gif | sort -R)',
-        file_path = home .. '/.config/nvim/static/dashboard.gif',
+        file_path = home .. '/.config/nvim/static/apple.gif',
         file_height = 24,
         file_width = 64,
       },
