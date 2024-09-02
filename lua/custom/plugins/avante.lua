@@ -115,17 +115,26 @@ return {
         },
       },
     },
+
     {
       -- Make sure to setup it properly if you have lazy=true
-      'OXY2DEV/markview.nvim',
-      enabled = true,
-      lazy = false,
-      ft = { 'markdown', 'norg', 'rmd', 'org', 'vimwiki', 'Avante' },
+      'MeanderingProgrammer/render-markdown.nvim',
       opts = {
-        filetypes = { 'markdown', 'norg', 'rmd', 'org', 'vimwiki', 'Avante' },
-        buf_ignore = {},
-        max_length = 99999,
+        file_types = { 'markdown', 'Avante' },
       },
+      ft = { 'markdown', 'Avante' },
     },
+    -- {
+    --   -- Make sure to setup it properly if you have lazy=true
+    --   'OXY2DEV/markview.nvim',
+    --   enabled = true,
+    --   lazy = false,
+    --   ft = { 'markdown', 'norg', 'rmd', 'org', 'vimwiki', 'Avante' },
+    --   opts = {
+    --     filetypes = { 'markdown', 'norg', 'rmd', 'org', 'vimwiki', 'Avante' },
+    --     buf_ignore = {},
+    --     max_length = 99999,
+    --   },
+    -- },
   },
 }

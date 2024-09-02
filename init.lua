@@ -356,7 +356,7 @@ require('lazy').setup({
   require 'custom.plugins.nvim-treesiter',
   require 'custom.plugins.tokyonight',
   require 'custom.plugins.kznllm',
-  require 'custom.plugins.markview',
+  require 'custom.plugins.render-markdown',
   require 'custom.plugins.avante',
   require 'custom.plugins.tmux-navigation',
   require 'custom.plugins.supermaven',
