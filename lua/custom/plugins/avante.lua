@@ -4,7 +4,7 @@ return {
   opts = {
     provider = 'claude',
     windows = {
-      width = 40,
+      width = 50,
     },
     vendors = {
       deepseek = {
@@ -107,8 +107,8 @@ return {
       opts = {
         -- recommended settings
         default = {
-          embed_image_as_base64 = false,
-          prompt_for_file_name = false,
+          embed_image_as_base64 = true,
+          prompt_for_file_name = true,
           drag_and_drop = {
             insert_mode = true,
           },
