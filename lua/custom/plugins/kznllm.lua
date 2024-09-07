@@ -5,6 +5,12 @@ return {
     local kznllm = require 'kznllm'
     local spec_anthropic = require 'kznllm.specs.anthropic'
     local spec_groq = require 'kznllm.specs.openai'
+
+    local spec_deepseek = require 'kznllm.specs.openai'
+    spec_deepseek.SELECTED_MODEL = { name = 'deepseek-coder', max_tokens = 4096 }
+    spec_deepseek.API_KEY_NAME = 'DEEPSEEK_API_KEY'
+    spec_deepseek.URL = 'https://api.deepseek.com/chat/completions'
+
     kznllm.TEMPLATE_DIRECTORY = vim.fn.expand(self.dir) .. '/templates/'
 
     local function llm_anthropic_fill()
@@ -35,10 +41,27 @@ return {
       }, spec_groq.make_job, { debug = true })
     end
 
+    local function llm_deepseek_fill()
+      kznllm.invoke_llm({
+        { role = 'system', prompt_template = spec_groq.PROMPT_TEMPLATES.GROQ.FILL_MODE_SYSTEM_PROMPT },
+        { role = 'user', prompt_template = spec_groq.PROMPT_TEMPLATES.GROQ.FILL_MODE_USER_PROMPT },
+      }, spec_deepseek.make_job)
+    end
+
+    local function llm_deepseek_fill_debug()
+      kznllm.invoke_llm({
+        { role = 'system', prompt_template = spec_groq.PROMPT_TEMPLATES.GROQ.FILL_MODE_SYSTEM_PROMPT },
+        { role = 'user', prompt_template = spec_groq.PROMPT_TEMPLATES.GROQ.FILL_MODE_USER_PROMPT },
+      }, spec_deepseek.make_job, { debug = true })
+    end
+
     vim.keymap.set({ 'n', 'v' }, '<leader>kab', llm_anthropic_fill, { desc = 'Send current selection to LLM ANTHROPIC buffer' })
     vim.keymap.set({ 'n', 'v' }, '<leader>kad', llm_anthropic_fill_debug, { desc = 'Send current selection to LLM ANTHROPIC DEBUG' })
 
     vim.keymap.set({ 'n', 'v' }, '<leader>kgb', llm_groq_fill, { desc = 'Send current selection to LLM GROQ buffer' })
     vim.keymap.set({ 'n', 'v' }, '<leader>kgd', llm_groq_fill_debug, { desc = 'Send current selection to LLM GROQ DEBUG' })
+
+    vim.keymap.set({ 'n', 'v' }, '<leader>kdb', llm_deepseek_fill, { desc = 'Send current selection to LLM DEEPSEEK buffer' })
+    vim.keymap.set({ 'n', 'v' }, '<leader>kdd', llm_deepseek_fill_debug, { desc = 'Send current selection to LLM DEEPSEEK DEBUG' })
   end,
 }

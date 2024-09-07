@@ -2,7 +2,7 @@ return {
   'yetone/avante.nvim',
   event = 'VeryLazy',
   opts = {
-    provider = 'claude',
+    provider = 'deepseek',
     windows = {
       width = 40,
     },
@@ -124,17 +124,5 @@ return {
       },
       ft = { 'markdown', 'Avante' },
     },
-    -- {
-    --   -- Make sure to setup it properly if you have lazy=true
-    --   'OXY2DEV/markview.nvim',
-    --   enabled = true,
-    --   lazy = false,
-    --   ft = { 'markdown', 'norg', 'rmd', 'org', 'vimwiki', 'Avante' },
-    --   opts = {
-    --     filetypes = { 'markdown', 'norg', 'rmd', 'org', 'vimwiki', 'Avante' },
-    --     buf_ignore = {},
-    --     max_length = 99999,
-    --   },
-    -- },
   },
 }
