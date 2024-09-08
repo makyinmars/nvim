@@ -40,6 +40,7 @@ return {
       button('l', '  Lazy', ':Lazy<CR>'),
       button('c', '  Configuration', ':e $MYVIMRC <CR>'),
       button('k', '  Kitty config', ':e ~/.config/kitty/kitty.conf <CR>'),
+      button('o', '  Obsidian notes', ':e ~/Development/Obsidian/Maky Software Inc/Notes/Daily Notes.md <CR>'),
       button('q', '  Quit Neovim', ':qa<CR>'),
     }
 

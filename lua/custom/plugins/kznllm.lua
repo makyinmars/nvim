@@ -1,5 +1,7 @@
 return {
-  'makyinmars/kznllm.nvim',
+  'chottolabs/kznllm.nvim',
+  -- dev = true,
+  -- dir = "$HOME/Development/OpenSource/kznllm.nvim",
   dependencies = { 'nvim-lua/plenary.nvim' },
   config = function(self)
     local presets = require 'kznllm.presets'

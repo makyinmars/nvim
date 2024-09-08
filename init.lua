@@ -110,6 +110,9 @@ vim.opt.mouse = 'a'
 -- Don't show the mode, since it's already in the status line
 vim.opt.showmode = false
 
+-- Concealing Characters
+vim.opt.conceallevel = 1
+
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
@@ -361,6 +364,7 @@ require('lazy').setup({
   require 'custom.plugins.tmux-navigation',
   require 'custom.plugins.supermaven',
   require 'custom.plugins.crackboard',
+  require 'custom.plugins.obsidian',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
