@@ -81,9 +81,7 @@ return {
 
       -- You'll need to check that you have the required things installed
       -- online, please don't ask me how to install them :)
-      ensure_installed = {
-        'codelldb',
-      },
+      ensure_installed = {},
     }
 
     -- Basic debugging keymaps, feel free to change to your liking!
