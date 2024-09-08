@@ -1,67 +1,84 @@
 return {
-  'chottolabs/kznllm.nvim',
-  dependencies = { 'nvim-lua/plenary.nvim' },
+  'makyinmars/kznllm.nvim',
+  dependencies = { 'nvim-lua/plenary.nvim', 'stevearc/dressing.nvim' },
   config = function(self)
-    local kznllm = require 'kznllm'
-    local spec_anthropic = require 'kznllm.specs.anthropic'
-    local spec_groq = require 'kznllm.specs.openai'
+    local presets = require 'kznllm.presets'
+    local Path = require 'plenary.path'
 
-    local spec_deepseek = require 'kznllm.specs.openai'
-    spec_deepseek.SELECTED_MODEL = { name = 'deepseek-coder', max_tokens = 4096 }
-    spec_deepseek.API_KEY_NAME = 'DEEPSEEK_API_KEY'
-    spec_deepseek.URL = 'https://api.deepseek.com/chat/completions'
+    -- falls back to `vim.fn.stdpath 'data' .. '/lazy/kznllm/templates'` when the plugin is not locally installed
+    local TEMPLATE_DIRECTORY = Path:new(vim.fn.expand(self.dir) .. '/templates')
 
-    kznllm.TEMPLATE_DIRECTORY = vim.fn.expand(self.dir) .. '/templates/'
+    -- edit this to change the selected preset (or just fork the repo and add your own)
+    local SELECTED_PRESET = presets[1]
+    local spec = require(('kznllm.specs.%s'):format(SELECTED_PRESET.provider))
 
-    local function llm_anthropic_fill()
-      kznllm.invoke_llm({
-        { role = 'system', prompt_template = spec_anthropic.PROMPT_TEMPLATES.FILL_MODE_SYSTEM_PROMPT },
-        { role = 'user', prompt_template = spec_anthropic.PROMPT_TEMPLATES.FILL_MODE_USER_PROMPT },
-      }, spec_anthropic.make_job)
+    local function switch_presets()
+      vim.ui.select(presets, {
+        format_item = function(item)
+          local options = {}
+          for k, v in pairs(item.opts.data_params or {}) do
+            if type(v) == 'number' then
+              local k_parts = {}
+              local k_split = vim.split(k, '_')
+              for i, term in ipairs(k_split) do
+                if i > 1 then
+                  table.insert(k_parts, term:sub(0, 3))
+                else
+                  table.insert(k_parts, term:sub(0, 4))
+                end
+              end
+              table.insert(options, ('%-5s %-5s'):format(table.concat(k_parts, '_'), v))
+            end
+          end
+          table.sort(options)
+          return ('%-20s %10s | %s'):format(item.id, item.provider, table.concat(options, ' '))
+        end,
+      }, function(choice)
+        if not choice then
+          return
+        end
+        spec = require(('kznllm.specs.%s'):format(choice.provider))
+        SELECTED_PRESET = choice
+        print(('%-15s provider: %-10s'):format(choice.id, choice.provider))
+      end)
     end
 
-    local function llm_anthropic_fill_debug()
-      kznllm.invoke_llm({
-        { role = 'system', prompt_template = spec_anthropic.PROMPT_TEMPLATES.FILL_MODE_SYSTEM_PROMPT },
-        { role = 'user', prompt_template = spec_anthropic.PROMPT_TEMPLATES.FILL_MODE_USER_PROMPT },
-      }, spec_anthropic.make_job, { debug = true })
+    vim.keymap.set({ 'n', 'v' }, '<leader>kdm', switch_presets, { desc = 'switch between presets' })
+
+    local function llm_fill()
+      presets.invoke_llm(
+        SELECTED_PRESET.make_data_fn,
+        spec.make_curl_args,
+        spec.make_job,
+        vim.tbl_extend('keep', SELECTED_PRESET.opts, {
+          template_directory = TEMPLATE_DIRECTORY,
+        })
+      )
     end
 
-    local function llm_groq_fill()
-      kznllm.invoke_llm({
-        { role = 'system', prompt_template = spec_groq.PROMPT_TEMPLATES.GROQ.FILL_MODE_SYSTEM_PROMPT },
-        { role = 'user', prompt_template = spec_groq.PROMPT_TEMPLATES.GROQ.FILL_MODE_USER_PROMPT },
-      }, spec_groq.make_job)
+    vim.keymap.set({ 'n', 'v' }, '<leader>kdb', llm_fill, { desc = 'Send current selection to LLM llm_fill' })
+
+    -- optional for debugging purposes
+    local function debug()
+      presets.invoke_llm(
+        SELECTED_PRESET.make_data_fn,
+        spec.make_curl_args,
+        spec.make_job,
+        vim.tbl_extend('keep', SELECTED_PRESET.opts, {
+          template_directory = TEMPLATE_DIRECTORY,
+          debug = true,
+        })
+      )
     end
 
-    local function llm_groq_fill_debug()
-      kznllm.invoke_llm({
-        { role = 'system', prompt_template = spec_groq.PROMPT_TEMPLATES.GROQ.FILL_MODE_SYSTEM_PROMPT },
-        { role = 'user', prompt_template = spec_groq.PROMPT_TEMPLATES.GROQ.FILL_MODE_USER_PROMPT },
-      }, spec_groq.make_job, { debug = true })
-    end
+    vim.keymap.set({ 'n', 'v' }, '<leader>kdd', debug, { desc = 'Send current selection to LLM debug' })
 
-    local function llm_deepseek_fill()
-      kznllm.invoke_llm({
-        { role = 'system', prompt_template = spec_groq.PROMPT_TEMPLATES.GROQ.FILL_MODE_SYSTEM_PROMPT },
-        { role = 'user', prompt_template = spec_groq.PROMPT_TEMPLATES.GROQ.FILL_MODE_USER_PROMPT },
-      }, spec_deepseek.make_job)
-    end
-
-    local function llm_deepseek_fill_debug()
-      kznllm.invoke_llm({
-        { role = 'system', prompt_template = spec_groq.PROMPT_TEMPLATES.GROQ.FILL_MODE_SYSTEM_PROMPT },
-        { role = 'user', prompt_template = spec_groq.PROMPT_TEMPLATES.GROQ.FILL_MODE_USER_PROMPT },
-      }, spec_deepseek.make_job, { debug = true })
-    end
-
-    vim.keymap.set({ 'n', 'v' }, '<leader>kab', llm_anthropic_fill, { desc = 'Send current selection to LLM ANTHROPIC buffer' })
-    vim.keymap.set({ 'n', 'v' }, '<leader>kad', llm_anthropic_fill_debug, { desc = 'Send current selection to LLM ANTHROPIC DEBUG' })
-
-    vim.keymap.set({ 'n', 'v' }, '<leader>kgb', llm_groq_fill, { desc = 'Send current selection to LLM GROQ buffer' })
-    vim.keymap.set({ 'n', 'v' }, '<leader>kgd', llm_groq_fill_debug, { desc = 'Send current selection to LLM GROQ DEBUG' })
-
-    vim.keymap.set({ 'n', 'v' }, '<leader>kdb', llm_deepseek_fill, { desc = 'Send current selection to LLM DEEPSEEK buffer' })
-    vim.keymap.set({ 'n', 'v' }, '<leader>kdd', llm_deepseek_fill_debug, { desc = 'Send current selection to LLM DEEPSEEK DEBUG' })
+    vim.api.nvim_set_keymap('n', '<Esc>', '', {
+      noremap = true,
+      silent = true,
+      callback = function()
+        vim.api.nvim_exec_autocmds('User', { pattern = 'LLM_Escape' })
+      end,
+    })
   end,
 }

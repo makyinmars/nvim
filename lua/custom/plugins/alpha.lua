@@ -4,7 +4,6 @@ return {
   config = function()
     local alpha = require 'alpha'
     local dashboard = require 'alpha.themes.dashboard'
-    local home = os.getenv 'HOME'
 
     local button = dashboard.button
 
@@ -38,8 +37,9 @@ return {
       button('e', '  New file', ':ene <BAR> startinsert <CR>'),
       button('r', '  Recently used files', ':Telescope oldfiles <CR>'),
       button('t', '  Find text', ':Telescope live_grep <CR>'),
-      button('l', '  Lazy', ':Lazy<CR>'), -- New Lazy button
+      button('l', '  Lazy', ':Lazy<CR>'),
       button('c', '  Configuration', ':e $MYVIMRC <CR>'),
+      button('k', '  Kitty config', ':e ~/.config/kitty/kitty.conf <CR>'),
       button('q', '  Quit Neovim', ':qa<CR>'),
     }
 
@@ -57,10 +57,5 @@ return {
     }
 
     alpha.setup(dashboard.opts)
-
-    vim.g.dashboard_preview_command = 'chafa --passthrough tmux -f symbols -s 60x60 -c full --fg-only --symbols braille --clear'
-    vim.g.dashboard_preview_file = home .. '/.config/nvim/static/apple.gif'
-    vim.g.dashboard_preview_file_height = 24
-    vim.g.dashboard_preview_file_width = 64
   end,
 }
