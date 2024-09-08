@@ -361,7 +361,6 @@ require('lazy').setup({
   require 'custom.plugins.tmux-navigation',
   require 'custom.plugins.supermaven',
   require 'custom.plugins.crackboard',
-  require 'custom.plugins.dressing',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.

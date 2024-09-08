@@ -17,7 +17,7 @@ return {
       keymaps = {
         accept_suggestion = '<C-y>',
       },
-      ignore_filetypes = { env = true, zshrc = true },
+      ignore_filetypes = { env = true, zshrc = true, zig = true },
       disable_inline_completion = false, -- disables inline completion for use with cmp
     }
   end,

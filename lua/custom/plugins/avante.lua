@@ -7,8 +7,34 @@ return {
       width = 40,
     },
     vendors = {
+      ---@type AvanteProvider
+      ollama = {
+        ['local'] = true,
+        endpoint = '127.0.0.1:11434/v1',
+        model = 'reflection:70b',
+        parse_curl_args = function(opts, code_opts)
+          return {
+            url = opts.endpoint .. '/chat/completions',
+            headers = {
+              ['Accept'] = 'application/json',
+              ['Content-Type'] = 'application/json',
+            },
+            body = {
+              model = opts.model,
+              messages = require('avante.providers').copilot.parse_message(code_opts), -- you can make your own message, but this is very advanced
+              max_tokens = 8192,
+              temperature = 0,
+              stream = true,
+            },
+          }
+        end,
+        parse_response_data = function(data_stream, event_state, opts)
+          require('avante.providers').openai.parse_response(data_stream, event_state, opts)
+        end,
+      },
+      ---@type AvanteProvider
       deepseek = {
-        endpoint = 'https://api.deepseek.com/chat/completions',
+        endpoint = 'https://api.deepseek.com/beta/v1/chat/completions',
         model = 'deepseek-coder',
         api_key_name = 'DEEPSEEK_API_KEY',
         parse_curl_args = function(opts, code_opts)
@@ -26,7 +52,7 @@ return {
                 { role = 'user', content = require('avante.providers.openai').get_user_message(code_opts) },
               },
               temperature = 0,
-              max_tokens = 4096,
+              max_tokens = 8192,
               stream = true, -- this will be set by default.
             },
           }
@@ -95,7 +121,6 @@ return {
   },
   build = 'make',
   dependencies = {
-    'stevearc/dressing.nvim',
     'nvim-lua/plenary.nvim',
     'MunifTanjim/nui.nvim',
     --- The below dependencies are optional,

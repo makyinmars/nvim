@@ -1,6 +1,6 @@
 return {
   'makyinmars/kznllm.nvim',
-  dependencies = { 'nvim-lua/plenary.nvim', 'stevearc/dressing.nvim' },
+  dependencies = { 'nvim-lua/plenary.nvim' },
   config = function(self)
     local presets = require 'kznllm.presets'
     local Path = require 'plenary.path'
@@ -9,7 +9,7 @@ return {
     local TEMPLATE_DIRECTORY = Path:new(vim.fn.expand(self.dir) .. '/templates')
 
     -- edit this to change the selected preset (or just fork the repo and add your own)
-    local SELECTED_PRESET = presets[1]
+    local SELECTED_PRESET = presets[5] -- Deepseek by default
     local spec = require(('kznllm.specs.%s'):format(SELECTED_PRESET.provider))
 
     local function switch_presets()
