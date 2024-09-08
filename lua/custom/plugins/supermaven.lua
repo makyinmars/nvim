@@ -8,4 +8,7 @@ return {
       ignore_filetypes = { env = true, zshrc = true },
     }
   end,
+  keys = {
+    { '<leader>ct', '<cmd>SupermavenToggle<cr>', desc = 'Supermaven Toggle' },
+  },
 }
