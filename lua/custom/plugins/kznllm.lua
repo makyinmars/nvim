@@ -1,5 +1,5 @@
 return {
-  'chottolabs/kznllm.nvim',
+  'makyinmars/kznllm.nvim',
   -- dev = true,
   -- dir = "$HOME/Development/OpenSource/kznllm.nvim",
   dependencies = { 'nvim-lua/plenary.nvim' },
