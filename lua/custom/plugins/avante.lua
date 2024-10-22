@@ -1,5 +1,5 @@
 return {
-  'yetone/avante.nvim',
+  'makyinmars/avante.nvim',
   event = 'VeryLazy',
   opts = {
     provider = 'claude',
