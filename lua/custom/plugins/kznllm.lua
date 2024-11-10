@@ -11,7 +11,7 @@ return {
     local TEMPLATE_DIRECTORY = Path:new(vim.fn.expand(self.dir) .. '/templates')
 
     -- edit this to change the selected preset (or just fork the repo and add your own)
-    local SELECTED_PRESET = presets[1] -- Groq by default
+    local SELECTED_PRESET = presets[3] -- Anthropic by default
     local spec = require(('kznllm.specs.%s'):format(SELECTED_PRESET.provider))
 
     local function switch_presets()
