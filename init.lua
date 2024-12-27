@@ -146,7 +146,17 @@ vim.opt.splitbelow = true
 --  See `:help 'list'`
 --  and `:help 'listchars'`
 vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+-- vim.opt.listchars = {
+--   tab = '» ',
+--   trail = '·',
+--   nbsp = '␣',
+--   eol = '↲',
+--   space = '·',
+--   extends = '›',
+--   precedes = '‹',
+--   multispace = '·', -- Show dots for multiple spaces
+--   leadmultispace = '·', -- Show dots for leading spaces
+-- }
 
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
@@ -361,11 +371,11 @@ require('lazy').setup({
   require 'custom.plugins.kznllm',
   require 'custom.plugins.render-markdown',
   require 'custom.plugins.avante',
-  require 'custom.plugins.tmux-navigation',
   require 'custom.plugins.crackboard',
   require 'custom.plugins.obsidian',
   require 'custom.plugins.supermaven',
   require 'custom.plugins.dingllm',
+  require 'custom.plugins.wakatime',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
