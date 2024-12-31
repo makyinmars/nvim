@@ -1,7 +1,7 @@
 return {
   'chottolabs/kznllm.nvim',
-  dev = true,
-  dir = os.getenv 'HOME' .. '/Development/OpenSource/kznllm.nvim',
+  -- dev = true,
+  -- dir = os.getenv 'HOME' .. '/Development/OpenSource/kznllm.nvim',
   dependencies = {
     { 'j-hui/fidget.nvim' },
   },
