@@ -21,8 +21,10 @@ return {
       deepseek = {
         __inherited_from = 'openai',
         api_key_name = 'DEEPSEEK_API_KEY',
-        endpoint = 'https://api.deepseek.com',
+        endpoint = 'https://api.deepseek.com/beta',
         model = 'deepseek-chat',
+        temperature = 0,
+        max_tokens = 8192,
       },
       groq = {
         __inherited_from = 'openai',
